@@ -130,6 +130,7 @@ def test_health_does_not_touch_the_database(client):
     assert client.head(reverse("health")).status_code == 200
 
 
+@pytest.mark.django_db
 def test_health_is_fast_enough_for_cron(client, django_assert_num_queries):
     """The health endpoint must complete in milliseconds for cron-job.org.
 
