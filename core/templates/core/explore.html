@@ -71,13 +71,35 @@
     </form>
 
     <div class="flex items-center gap-2 text-on-surface-variant text-sm mb-4">
-        <span id="list-loader" class="htmx-indicator flex items-center gap-2">
+        <span id="list-loader" class="htmx-indicator flex items-center gap-2" aria-hidden="true">
             <span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>Chargement…
         </span>
+        {# Live region starts empty: screen readers only announce content changes, so it is filled on HTMX events below. #}
+        <span id="list-status" class="sr-only" role="status" aria-live="polite"></span>
     </div>
 
     <div id="issue-list">
         {% include "core/_issue_list.html" %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_body %}
+<script>
+    (function () {
+        const status = document.getElementById('list-status');
+        if (!status) return;
+        document.body.addEventListener('htmx:beforeRequest', function (event) {
+            if (event.detail.elt && event.detail.elt.id === 'filters') status.textContent = 'Chargement…';
+        });
+        document.body.addEventListener('htmx:afterSwap', function (event) {
+            if (event.detail.target && event.detail.target.id === 'issue-list') status.textContent = 'Résultats mis à jour';
+        });
+        document.body.addEventListener('htmx:afterRequest', function (event) {
+            if (event.detail.elt && event.detail.elt.id === 'filters' && !event.detail.successful) {
+                status.textContent = 'Le chargement a échoué';
+            }
+        });
+    })();
+</script>
 {% endblock %}
