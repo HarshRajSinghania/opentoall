@@ -9,7 +9,7 @@
                 <span class="material-symbols-outlined text-on-surface">menu</span>
             </button>
             <a href="{{ home_url }}" class="flex items-center gap-2.5 group">
-                <img src="{% static 'img/logo.png' %}" alt="OpenToAll" class="w-9 h-9 object-contain transition-transform group-hover:scale-105">
+                <img src="{% static 'img/logo.png' %}" alt="" class="w-9 h-9 object-contain transition-transform group-hover:scale-105">
                 <span class="font-display font-bold text-xl tracking-tight text-on-surface">Open<span class="text-primary">ToAll</span></span>
             </a>
         </div>
@@ -42,7 +42,7 @@
                 {% else %}
                 <span class="w-8 h-8 rounded-lg bg-primary/15 text-primary grid place-items-center text-sm font-bold">{{ profile.initials }}</span>
                 {% endif %}
-                <span class="hidden sm:inline text-sm font-medium">{{ profile.github_username|default:user.username }}</span>
+                <span class="sr-only sm:not-sr-only text-sm font-medium">{{ profile.github_username|default:user.username }}</span>
             </a>
             {% endwith %}
             <a href="{% url 'account_logout' %}" class="hidden sm:flex w-10 h-10 items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors" title="Déconnexion">
@@ -51,7 +51,7 @@
             {% else %}
             <a href="{% url 'account_login' %}" class="ml-1 inline-flex items-center gap-2 bg-primary text-on-primary text-sm font-semibold px-4 py-2 rounded-lg shadow-sm hover:shadow-card-hover hover:bg-primary-container transition-all active:scale-95">
                 <span class="material-symbols-outlined text-[18px]">login</span>
-                <span class="hidden sm:inline">Connexion</span>
+                <span class="sr-only sm:not-sr-only">Connexion</span>
             </a>
             {% endif %}
         </div>
@@ -63,7 +63,7 @@
 <aside id="mobile-drawer" class="fixed top-0 left-0 h-full w-4/5 max-w-xs bg-surface z-[70] -translate-x-full transition-transform duration-300 lg:hidden flex flex-col p-5 gap-2">
     <div class="flex items-center justify-between mb-4">
         <a href="{{ home_url }}" class="flex items-center gap-2.5">
-            <img src="{% static 'img/logo.png' %}" alt="OpenToAll" class="w-9 h-9 object-contain">
+            <img src="{% static 'img/logo.png' %}" alt="" class="w-9 h-9 object-contain">
             <span class="font-display font-bold text-xl">Open<span class="text-primary">ToAll</span></span>
         </a>
         <button onclick="toggleDrawer(false)" class="w-9 h-9 grid place-items-center rounded-lg hover:bg-surface-container"><span class="material-symbols-outlined">close</span></button>
